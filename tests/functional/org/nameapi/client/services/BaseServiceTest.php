@@ -11,7 +11,7 @@ use org\nameapi\ontology\input\context\TextCase;
 
 abstract class BaseServiceTest extends \PHPUnit_Framework_TestCase {
 
-    private $apiKey = null;
+    private $apiKey = null; //grab yours from nameapi.org
 
     /**
      * @return Context

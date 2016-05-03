@@ -18,10 +18,15 @@ class PersonNameParserServiceTest extends BaseServiceTest {
                 ->build())
             ->build();
         $parseResult = $personNameParser->parse($inputPerson);
+
+        //the assertions:
         $bestMatch = $parseResult->getBestMatch();
-        $name = $bestMatch->getParsedPerson()->getFirstName();
-        $this->assertEquals('John', $name->getFirst('GIVENNAME')->getString());
-        $this->assertEquals('Doe',  $name->getFirst('SURNAME')->getString());
+        $this->assertEquals('NATURAL', (string)$bestMatch->getParsedPerson()->getPersonType());
+        $this->assertEquals('PRIMARY', (string)$bestMatch->getParsedPerson()->getPersonRole());
+        $this->assertEquals('John', $bestMatch->getParsedPerson()->getAddressingGivenName());
+        $this->assertEquals('Doe', $bestMatch->getParsedPerson()->getAddressingSurname());
+        $this->assertEquals('John', $bestMatch->getParsedPerson()->getOutputPersonName()->getFirst('GIVENNAME')->getString());
+        $this->assertEquals('Doe', $bestMatch->getParsedPerson()->getOutputPersonName()->getFirst('SURNAME')->getString());
     }
 
     public function testParseSingleGivenName() {
@@ -32,9 +37,13 @@ class PersonNameParserServiceTest extends BaseServiceTest {
                 ->build())
             ->build();
         $parseResult = $personNameParser->parse($inputPerson);
+
+        //the assertions:
         $bestMatch = $parseResult->getBestMatch();
-        $name = $bestMatch->getParsedPerson()->getFirstName();
-        $this->assertEquals('John', $name->getFirst('GIVENNAME')->getString());
+        $this->assertEquals('NATURAL', (string)$bestMatch->getParsedPerson()->getPersonType());
+        $this->assertEquals('PRIMARY', (string)$bestMatch->getParsedPerson()->getPersonRole());
+        $this->assertEquals('John', $bestMatch->getParsedPerson()->getAddressingGivenName());
+        $this->assertEquals('John', $bestMatch->getParsedPerson()->getOutputPersonName()->getFirst('GIVENNAME')->getString());
     }
 
 }

@@ -30,8 +30,8 @@ abstract class BaseServiceTest extends \PHPUnit_Framework_TestCase {
      * @return ServiceFactory
      */
     protected function makeServiceFactory() {
-        //currently connecting to the preview server because v5.0 is not live yet.
-        return new ServiceFactory($this->apiKey, $this->makeContext(), new Host('http', 'preview-api.nameapi.org', 80), '5.0');
+        //currently connecting to the release candidate server because v5.0 is not live yet.
+        return new ServiceFactory($this->apiKey, $this->makeContext(), new Host('http', 'rc50-api.nameapi.org', 80), '5.0');
     }
 
 }

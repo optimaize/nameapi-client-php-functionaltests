@@ -46,4 +46,23 @@ class PersonNameParserServiceTest extends BaseServiceTest {
         $this->assertEquals('John', $bestMatch->getParsedPerson()->getOutputPersonName()->getFirst('GIVENNAME')->getString());
     }
 
+    public function testTranspositionDispute() {
+        $personNameParser = $this->makeServiceFactory()->parserServices()->personNameParser();
+        $inputPerson = NaturalInputPerson::builder()
+            ->name(InputPersonName::westernBuilder()
+                ->givenName( "Dubencu" )
+                ->surname( "Emilia" )
+                ->build())
+            ->build();
+        $parseResult = $personNameParser->parse($inputPerson);
+
+        //the assertions:
+        $bestMatch = $parseResult->getBestMatch();
+        $this->assertEquals('NATURAL', (string)$bestMatch->getParsedPerson()->getPersonType());
+        $this->assertEquals('PRIMARY', (string)$bestMatch->getParsedPerson()->getPersonRole());
+        $this->assertEquals('Emilia', $bestMatch->getParsedPerson()->getAddressingGivenName());
+        $this->assertEquals('Emilia', $bestMatch->getParsedPerson()->getOutputPersonName()->getFirst('GIVENNAME')->getString());
+        $this->assertEquals('Dubencu', $bestMatch->getParsedPerson()->getOutputPersonName()->getFirst('SURNAME')->getString());
+    }
+
 }
